@@ -127,86 +127,58 @@ class GamePage extends Component {
 
   renderGame = () => {
     const {choicesList} = this.props
-    const {score} = this.state
     return (
-      <>
-        <TitleContainer>
-          <TitleHeading>Rock Paper Scissors</TitleHeading>
-          <TitleScore>Score{score}</TitleScore>
-        </TitleContainer>
-        <GameContainer>
+      <GameContainer>
+        {choicesList.map(each => (
           <IconButton
             type="button"
-            data-testid="rockButton"
+            data-testid={`${each.id.toLowerCase()}Button`}
             onClick={this.onClickIcon}
           >
-            <GameIconImg
-              src={choicesList[0].imageUrl}
-              alt={choicesList[0].id}
-            />
+            <GameIconImg src={each.imageUrl} alt={each.id} />
           </IconButton>
-          <IconButton
-            type="button"
-            data-testid="scissorsButton"
-            onClick={this.onClickIcon}
-          >
-            <GameIconImg
-              src={choicesList[1].imageUrl}
-              alt={choicesList[1].id}
-            />
-          </IconButton>
-          <IconButton
-            type="button"
-            data-testid="paperButton"
-            onClick={this.onClickIcon}
-          >
-            <GameIconImg
-              src={choicesList[2].imageUrl}
-              alt={choicesList[2].id}
-            />
-          </IconButton>
-        </GameContainer>
-      </>
+        ))}
+      </GameContainer>
     )
   }
 
   renderResult = () => {
     const {choicesList} = this.props
-    const {selectedId, opponentId, score, result} = this.state
+    const {selectedId, opponentId, result} = this.state
     const selectedImg = choicesList.filter(each => selectedId === each.id)[0]
       .imageUrl
     const opponentImg = choicesList.filter(each => opponentId === each.id)[0]
       .imageUrl
     return (
-      <>
-        <TitleContainer>
-          <TitleHeading>Rock Paper Scissors</TitleHeading>
-          <TitleScore>Score{score}</TitleScore>
-        </TitleContainer>
-        <ResultContainer>
-          <ResultImages>
-            <PersonalComp>
-              <PersonalHeading>YOU</PersonalHeading>
-              <IconImg src={selectedImg} alt="your choice" />
-            </PersonalComp>
-            <PersonalComp>
-              <PersonalHeading>OPPONENT</PersonalHeading>
-              <IconImg src={opponentImg} alt="opponent choice" />
-            </PersonalComp>
-          </ResultImages>
-          <h1>{result}</h1>
-          <RulesButton type="button" onClick={this.onClickPlayAgain}>
-            PLAY AGAIN
-          </RulesButton>
-        </ResultContainer>
-      </>
+      <ResultContainer>
+        <ResultImages>
+          <PersonalComp>
+            <PersonalHeading>YOU</PersonalHeading>
+            <IconImg src={selectedImg} alt="your choice" />
+          </PersonalComp>
+          <PersonalComp>
+            <PersonalHeading>OPPONENT</PersonalHeading>
+            <IconImg src={opponentImg} alt="opponent choice" />
+          </PersonalComp>
+        </ResultImages>
+        <h1>{result}</h1>
+        <RulesButton type="button" onClick={this.onClickPlayAgain}>
+          PLAY AGAIN
+        </RulesButton>
+      </ResultContainer>
     )
   }
 
   render() {
-    const {isGameCompleted} = this.state
+    const {score, isGameCompleted} = this.state
     return (
       <OuterContainer>
+        <TitleContainer>
+          <TitleHeading>Rock Paper Scissors</TitleHeading>
+          <TitleScore>
+            Score <br /> {score}
+          </TitleScore>
+        </TitleContainer>
         {isGameCompleted === true ? this.renderResult() : this.renderGame()}
         {this.renderRules()}
       </OuterContainer>
