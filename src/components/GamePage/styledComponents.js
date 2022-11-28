@@ -40,8 +40,11 @@ export const TitleScore = styled.p`
 export const OnlyScore = styled.span`
   font-weight: 900;
   font-size: 32px;
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+  }
 `
-export const GameContainer = styled.ul`
+export const GameContainer = styled.div`
   width: 70%;
   list-style: none;
   margin-left: 0px;
@@ -49,6 +52,10 @@ export const GameContainer = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin-top: 64px;
+  }
 `
 export const RulesContainer = styled.div`
   width: 100%;
@@ -97,14 +104,20 @@ export const ResultImages = styled.div`
   justify-content: space-around;
 `
 export const IconImg = styled.img`
-  width: 25vw;
-  height: 25vw;
+  width: 12vw;
+  height: 12vw;
+  @media screen and (max-width: 768px) {
+    width: 35vw;
+    height: 35vw;
+  }
 `
 
 export const IconButton = styled.button`
-  width: 20vw;
-  height: 20vw;
-  margin: 2.5vw;
+  width: 12vw;
+  height: 12vw;
+  margin-top: 32px;
+  margin-left: 8vw;
+  margin-right: 8vw;
   cursor: pointer;
   border-style: none;
   border-radius: 50%;
@@ -114,6 +127,12 @@ export const IconButton = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  @media screen and (max-width: 768px) {
+    width: 35vw;
+    height: 35vw;
+    margin-left: 2.5vw;
+    margin-right: 2.5vw;
+  }
 `
 export const GameIconImg = styled.img`
   width: 140%;
@@ -124,11 +143,16 @@ export const TitleHeading = styled.h1`
   width: 150px;
 `
 export const PersonalComp = styled.div`
-  width: 25vw
+  width: 12vw
+  font-size: 24px;
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+    @media screen and (max-width: 768px) {
+      width: 35vw
+      font-size: 16px;
+  }
   `
 export const PersonalHeading = styled.h1`
   text-align: center;
