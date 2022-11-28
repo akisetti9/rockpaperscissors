@@ -1,6 +1,5 @@
 import {Component} from 'react'
 import {Popup} from 'reactjs-popup'
-// import GameIcon from '../GameIcon'
 import {
   OuterContainer,
   TitleContainer,
@@ -134,6 +133,7 @@ class GamePage extends Component {
             type="button"
             data-testid={`${each.id.toLowerCase()}Button`}
             onClick={this.onClickIcon}
+            key={each.id}
           >
             <GameIconImg src={each.imageUrl} alt={each.id} />
           </IconButton>
