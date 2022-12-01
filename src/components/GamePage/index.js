@@ -68,7 +68,7 @@ class GamePage extends Component {
           break
         } else if (generateOpponentId === choicesList[2].id) {
           finalResult = 'YOU LOSE'
-          newScore = 0
+          newScore = -1
           break
         }
         finalResult = 'IT IS DRAW'
@@ -81,7 +81,7 @@ class GamePage extends Component {
           break
         } else if (generateOpponentId === choicesList[0].id) {
           finalResult = 'YOU LOSE'
-          newScore = 0
+          newScore = -1
           break
         }
         finalResult = 'IT IS DRAW'
@@ -94,7 +94,7 @@ class GamePage extends Component {
           break
         } else if (generateOpponentId === choicesList[1].id) {
           finalResult = 'YOU LOSE'
-          newScore = 0
+          newScore = -1
           break
         }
         finalResult = 'IT IS DRAW'
@@ -105,40 +105,43 @@ class GamePage extends Component {
         newScore = 0
         break
     }
-    this.setState({
+    this.setState(prevState => ({
       selectedId: id,
       opponentId: generateOpponentId,
-      score: newScore,
+      score: prevState.score + newScore,
       result: finalResult,
       isGameCompleted: true,
-    })
+    }))
   }
 
   onClickPlayAgain = () => {
-    this.setState({
+    this.setState(prevState => ({
       selectedId: '',
       opponentId: '',
-      score: 0,
+      score: prevState.score,
       result: '',
       isGameCompleted: false,
-    })
+    }))
   }
 
   renderGame = () => {
     const {choicesList} = this.props
     return (
-      <GameContainer>
-        {choicesList.map(each => (
-          <IconButton
-            type="button"
-            data-testid={`${each.id.toLowerCase()}Button`}
-            onClick={this.onClickIcon}
-            key={each.id}
-          >
-            <GameIconImg src={each.imageUrl} alt={each.id} />
-          </IconButton>
-        ))}
-      </GameContainer>
+      <>
+        {this.renderHeader()}
+        <GameContainer>
+          {choicesList.map(each => (
+            <IconButton
+              type="button"
+              data-testid={`${each.id.toLowerCase()}Button`}
+              onClick={this.onClickIcon}
+              key={each.id}
+            >
+              <GameIconImg src={each.imageUrl} alt={each.id} />
+            </IconButton>
+          ))}
+        </GameContainer>
+      </>
     )
   }
 
@@ -150,35 +153,44 @@ class GamePage extends Component {
     const opponentImg = choicesList.filter(each => opponentId === each.id)[0]
       .imageUrl
     return (
-      <ResultContainer>
-        <ResultImages>
-          <PersonalComp>
-            <PersonalHeading>YOU</PersonalHeading>
-            <IconImg src={selectedImg} alt="your choice" />
-          </PersonalComp>
-          <PersonalComp>
-            <PersonalHeading>OPPONENT</PersonalHeading>
-            <IconImg src={opponentImg} alt="opponent choice" />
-          </PersonalComp>
-        </ResultImages>
-        <h1>{result}</h1>
-        <RulesButton type="button" onClick={this.onClickPlayAgain}>
-          PLAY AGAIN
-        </RulesButton>
-      </ResultContainer>
+      <>
+        {this.renderHeader()}
+        <ResultContainer>
+          <ResultImages>
+            <PersonalComp>
+              <PersonalHeading>YOU</PersonalHeading>
+              <IconImg src={selectedImg} alt="your choice" />
+            </PersonalComp>
+            <PersonalComp>
+              <PersonalHeading>OPPONENT</PersonalHeading>
+              <IconImg src={opponentImg} alt="opponent choice" />
+            </PersonalComp>
+          </ResultImages>
+          <h1>{result}</h1>
+          <RulesButton type="button" onClick={this.onClickPlayAgain}>
+            PLAY AGAIN
+          </RulesButton>
+        </ResultContainer>
+      </>
+    )
+  }
+
+  renderHeader = () => {
+    const {score} = this.state
+    return (
+      <TitleContainer>
+        <TitleHeading>Rock Paper Scissors</TitleHeading>
+        <TitleScore>
+          Score <br /> {score}
+        </TitleScore>
+      </TitleContainer>
     )
   }
 
   render() {
-    const {score, isGameCompleted} = this.state
+    const {isGameCompleted} = this.state
     return (
       <OuterContainer>
-        <TitleContainer>
-          <TitleHeading>Rock Paper Scissors</TitleHeading>
-          <TitleScore>
-            Score <br /> {score}
-          </TitleScore>
-        </TitleContainer>
         {isGameCompleted === true ? this.renderResult() : this.renderGame()}
         {this.renderRules()}
       </OuterContainer>
