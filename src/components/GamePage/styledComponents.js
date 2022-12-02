@@ -24,7 +24,7 @@ export const TitleContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `
-export const TitleScore = styled.p`
+export const TitleScore = styled.div`
   font-family: 'Roboto';
   width: 100px;
   height: 80%;
@@ -79,13 +79,21 @@ export const PopupContainer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
 `
 export const CloseButton = styled.button`
-  width: 100px;
+  width: 50px;
+  background-color: transparent;
+  border-style: none;
+  align-items: right;
 `
 export const RulesImage = styled.img`
-  width: 80%;
+  height: 80%;
+  width: auto;
+  @media screen and (max-width: 768px) {
+    width: 80%;
+    height: auto;
+  }
 `
 export const ResultContainer = styled.div`
   width: 70%;
@@ -110,34 +118,6 @@ export const IconImg = styled.img`
     width: 35vw;
     height: 35vw;
   }
-`
-
-export const IconButton = styled.button`
-  width: 12vw;
-  height: 12vw;
-  margin-top: 32px;
-  margin-left: 8vw;
-  margin-right: 8vw;
-  cursor: pointer;
-  border-style: none;
-  border-radius: 50%;
-  background-color: yellow;
-  padding-top: 8px;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  @media screen and (max-width: 768px) {
-    width: 35vw;
-    height: 35vw;
-    margin-left: 2.5vw;
-    margin-right: 2.5vw;
-  }
-`
-export const GameIconImg = styled.img`
-  width: 140%;
-  height: 140%;
-  border-radius: 70%;
 `
 export const TitleHeading = styled.h1`
   width: 150px;

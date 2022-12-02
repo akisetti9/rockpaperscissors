@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import {Popup} from 'reactjs-popup'
+import {AiOutlineClose} from 'react-icons/ai'
 import {
   OuterContainer,
   TitleContainer,
@@ -14,11 +15,11 @@ import {
   ResultContainer,
   ResultImages,
   IconImg,
-  IconButton,
-  GameIconImg,
   PersonalComp,
   PersonalHeading,
 } from './styledComponents'
+import './index.css'
+import GameIconButton from '../GameIconButton'
 
 class GamePage extends Component {
   state = {
@@ -41,9 +42,11 @@ class GamePage extends Component {
       >
         {close => (
           <PopupContainer>
-            <CloseButton type="button" onClick={() => close()}>
-              Close
-            </CloseButton>
+            <div className="place-end">
+              <CloseButton type="button" onClick={() => close()}>
+                <AiOutlineClose className="close-icon" />
+              </CloseButton>
+            </div>
             <RulesImage
               src="https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/rules-image.png"
               alt="rules"
@@ -54,8 +57,7 @@ class GamePage extends Component {
     </RulesContainer>
   )
 
-  onClickIcon = event => {
-    const id = event.target.alt
+  onClickIcon = id => {
     const {choicesList} = this.props
     const generateOpponentId = choicesList[Math.floor(Math.random() * 3)].id
     let newScore
@@ -131,14 +133,11 @@ class GamePage extends Component {
         {this.renderHeader()}
         <GameContainer>
           {choicesList.map(each => (
-            <IconButton
-              type="button"
-              data-testid={`${each.id.toLowerCase()}Button`}
-              onClick={this.onClickIcon}
+            <GameIconButton
+              each={each}
+              onClickIcon={this.onClickIcon}
               key={each.id}
-            >
-              <GameIconImg src={each.imageUrl} alt={each.id} />
-            </IconButton>
+            />
           ))}
         </GameContainer>
       </>
@@ -166,7 +165,7 @@ class GamePage extends Component {
               <IconImg src={opponentImg} alt="opponent choice" />
             </PersonalComp>
           </ResultImages>
-          <h1>{result}</h1>
+          <p>{result}</p>
           <RulesButton type="button" onClick={this.onClickPlayAgain}>
             PLAY AGAIN
           </RulesButton>
@@ -181,7 +180,8 @@ class GamePage extends Component {
       <TitleContainer>
         <TitleHeading>Rock Paper Scissors</TitleHeading>
         <TitleScore>
-          Score <br /> {score}
+          <p className="score-span">Score</p>
+          <p className="score-value-span">{score}</p>
         </TitleScore>
       </TitleContainer>
     )
@@ -190,7 +190,7 @@ class GamePage extends Component {
   render() {
     const {isGameCompleted} = this.state
     return (
-      <OuterContainer>
+      <OuterContainer data-testid="rockPaperScissors">
         {isGameCompleted === true ? this.renderResult() : this.renderGame()}
         {this.renderRules()}
       </OuterContainer>
